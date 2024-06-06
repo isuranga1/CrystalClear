@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('open-dyslexic.ttf') format('truetype');
+}
+
+:root {
+  --font-base: "OpenDyslexic", sans-serif;
+
+  --primary-color: #a4e5ef;
+  --secondary-color: #0512a3;
+  --black-color: #030303;
+  --lightGray-color: #e4e4e4;
+  --gray-color: #71757b;
+  --brown-color: #46364a;
+  --white-color: #ffffff;
+  --light-green:#4caf9b00;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+body {
+  font-family: var(--font-base);
+}

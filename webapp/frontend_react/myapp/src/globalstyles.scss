@@ -1,0 +1,17 @@
+// globalStyles.scss
+
+// Import other global styles if needed
+
+// Define @font-face rule for OpenDyslexic
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('/fonts/OpenDyslexic-Regular.ttf') format('truetype');
+    /* Add more src declarations for different font formats if necessary */
+}
+
+// Apply OpenDyslexic font to body
+body {
+    font-family: 'OpenDyslexic', sans-serif;
+}
+
+// Define other global styles as needed
