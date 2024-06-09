@@ -11,14 +11,11 @@ CrystalClear is an innovative web application designed to support dyslexic learn
   - **Video Recognition**: Analyzes hand poses and movements in multisensory exercises.
 
 
-## Motivation
-
 CrystalClear was developed to address the limitations of existing dyslexia treatments:
 - Limited accessibility to specialized schools and learning specialists.
 - High costs and limited availability of consistent learning specialist sessions.
 - Lack of standardized and guided approaches for at-home learning.
 
-## Inclusivity
 
 - **Dyslexic Friendly**: Uses the OpenDyslexic-2 font for better readability.
 - **Child-Centered Design**: Ensures ease of use for young learners.
