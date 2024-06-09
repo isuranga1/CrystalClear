@@ -17,8 +17,4 @@ CrystalClear was developed to address the limitations of existing dyslexia treat
 - Lack of standardized and guided approaches for at-home learning.
 
 
-- **Dyslexic Friendly**: Uses the OpenDyslexic-2 font for better readability.
-- **Child-Centered Design**: Ensures ease of use for young learners.
-- **ADHD Friendly**: Gamification and narrative elements help maintain focus and engagement.
-
 
