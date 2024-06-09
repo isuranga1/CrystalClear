@@ -1,6 +1,6 @@
 # CrystalClear
 
-CrystalClear is an innovative web application designed to support dyslexic learners by leveraging cutting-edge technology. The platform uses Artificial Intelligence (AI) to automate and personalize dyslexia treatment exercises, ensuring each session is tailored to the individual needs of the user. Additionally, CrystalClear incorporates gamification elements, such as storyline narratives, levels, and rewards, to make learning engaging and enjoyable. Advanced recognition features, including sound and video recognition, further enhance the learning experience by providing precise feedback on pronunciation and hand movements.
+CrystalClear is an innovative web application designed to support dyslexic learners. The platform uses AI to automate and personalize dyslexia treatment exercises, ensuring each session is tailored to the individual needs of the user. Additionally, CrystalClear incorporates gamification elements, such as storyline narratives, levels, and rewards, to make learning engaging and enjoyable. Advanced recognition features, including sound and video recognition, further enhance the learning experience by providing precise feedback on pronunciation and hand movements.
 
 ## Features
 
@@ -9,7 +9,7 @@ CrystalClear is an innovative web application designed to support dyslexic learn
 - **Advanced Recognition**:
   - **Sound Recognition**: For pronunciation exercises.
   - **Video Recognition**: Analyzes hand poses and movements in multisensory exercises.
-- **Future Enhancement**: Handwriting recognition.
+
 
 ## Motivation
 
