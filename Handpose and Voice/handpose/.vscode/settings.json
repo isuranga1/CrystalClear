@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/166c8a37-5672-4cec-9ffd-1a340749c15a/resourceGroups/CrystalClearI/providers/Microsoft.Web/sites/CrystalClearI",
+    "appService.deploySubpath": "build"
+}
