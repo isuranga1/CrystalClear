@@ -1,0 +1,34 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.webcam {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 640px;
+  height: 480px;
+  z-index: 0;
+}
+
+.canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 640px;
+  height: 480px;
+  z-index: 1;
+}
+
+.controls {
+  position: absolute;
+  top: 0;
+  left: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
