@@ -4,7 +4,6 @@ const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 const FaceLandmarkerComponent = () => {
   const [faceLandmarker, setFaceLandmarker] = useState(null);
-  const [runningMode, setRunningMode] = useState("IMAGE");
   const [webcamRunning, setWebcamRunning] = useState(false);
   const [enableWebcamButton, setEnableWebcamButton] = useState(null);
   const videoRef = useRef(null);
@@ -24,52 +23,22 @@ const FaceLandmarkerComponent = () => {
           delegate: "GPU",
         },
         outputFaceBlendshapes: true,
-        runningMode,
+        runningMode: "VIDEO",
         numFaces: 1,
       });
       setFaceLandmarker(flm);
-      demosSectionRef.current.classList.remove("invisible");
     };
 
     initializeFaceLandmarker();
+    return () => {
+      // Clean up faceLandmarker if needed
+      if (faceLandmarker) {
+        faceLandmarker.close();
+      }
+    };
   }, []);
 
-  const handleClick = async (event) => {
-    if (!faceLandmarker) {
-      console.log("Wait for faceLandmarker to load before clicking!");
-      return;
-    }
-
-    if (runningMode === "VIDEO") {
-      setRunningMode("IMAGE");
-      await faceLandmarker.setOptions({ runningMode });
-    }
-
-    const allCanvas = event.target.parentNode.getElementsByClassName("canvas");
-    Array.from(allCanvas).forEach((n) => n.parentNode.removeChild(n));
-
-    const faceLandmarkerResult = await faceLandmarker.detect(event.target);
-    const canvas = canvasRef.current;
-    canvas.width = event.target.naturalWidth;
-    canvas.height = event.target.naturalHeight;
-
-    const ctx = canvas.getContext("2d");
-    const drawingUtils = new DrawingUtils(ctx);
-    for (const landmarks of faceLandmarkerResult.faceLandmarks) {
-      drawingUtils.drawConnectors(
-        landmarks,
-        FaceLandmarker.FACE_LANDMARKS_TESSELATION,
-        { color: "#C0C0C070", lineWidth: 1 }
-      );
-      // Add other drawingUtils.drawConnectors calls here
-    }
-
-    drawBlendShapes(
-      imageBlendShapesRef.current,
-      faceLandmarkerResult.faceBlendshapes
-    );
-  };
-  ////////videooooooooo
+  /////videooooooooo
 
   const enableCam = (event) => {
     if (!faceLandmarker) {
@@ -84,7 +53,6 @@ const FaceLandmarkerComponent = () => {
       setWebcamRunning(true);
       enableWebcamButton.innerText = "DISABLE PREDICTIONS";
     }
-
     const constraints = { video: true };
 
     navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
@@ -95,6 +63,10 @@ const FaceLandmarkerComponent = () => {
 
   const predictWebcam = async () => {
     const video = videoRef.current;
+    if (!video.videoWidth || !video.videoHeight) {
+      console.log("Video dimensions are not ready.");
+      return;
+    }
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const drawingUtils = new DrawingUtils(ctx);
@@ -106,11 +78,6 @@ const FaceLandmarkerComponent = () => {
     canvas.style.height = `${video.offsetWidth * radio}px`;
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-
-    if (runningMode === "IMAGE") {
-      setRunningMode("VIDEO");
-      await faceLandmarker.setOptions({ runningMode: "VIDEO" });
-    }
 
     let startTimeMs = performance.now();
     const results = await faceLandmarker.detectForVideo(video, startTimeMs);
@@ -168,7 +135,7 @@ const FaceLandmarkerComponent = () => {
 
     drawBlendShapes(videoBlendShapesRef.current, results.faceBlendshapes);
 
-    if (webcamRunning) {
+    if (!webcamRunning) {
       window.requestAnimationFrame(predictWebcam);
     }
   };
@@ -200,25 +167,6 @@ const FaceLandmarkerComponent = () => {
       <h1>Face landmark detection using the MediaPipe FaceLandmarker task</h1>
 
       <section id="demos" className="invisible" ref={demosSectionRef}>
-        <h2>Demo: Detecting Images</h2>
-        <p>
-          <b>Click on an image below</b> to see the key landmarks of the face.
-        </p>
-
-        <div className="detectOnClick">
-          <img
-            src="https://storage.googleapis.com/mediapipe-assets/portrait.jpg"
-            width="100%"
-            onClick={handleClick}
-            alt="Portrait"
-            crossOrigin="anonymous"
-            title="Click to get detection!"
-          />
-        </div>
-        <div className="blend-shapes">
-          <ul className="blend-shapes-list" ref={imageBlendShapesRef}></ul>
-        </div>
-
         <h2>Demo: Webcam continuous face landmarks detection</h2>
         <p>
           Hold your face in front of your webcam to get real-time face
