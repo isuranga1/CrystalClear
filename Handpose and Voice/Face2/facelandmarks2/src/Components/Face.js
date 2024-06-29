@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
-
 const FaceLandmarkerComponent = () => {
   const [faceLandmarker, setFaceLandmarker] = useState(null);
   const [webcamRunning, setWebcamRunning] = useState(false);
@@ -11,6 +10,13 @@ const FaceLandmarkerComponent = () => {
   const imageBlendShapesRef = useRef(null);
   const videoBlendShapesRef = useRef(null);
   const demosSectionRef = useRef(null);
+  const pronoun = useRef(null);
+  const boo = useRef(null);
+  let eee = 0;
+  let count = 0;
+  let jawopenscore;
+  const [Pronounciation, setPronounciation] = useState(null);
+  let animationFrameId;
 
   useEffect(() => {
     const initializeFaceLandmarker = async () => {
@@ -49,10 +55,15 @@ const FaceLandmarkerComponent = () => {
     if (webcamRunning) {
       setWebcamRunning(false);
       enableWebcamButton.innerText = "ENABLE PREDICTIONS";
+      stopWebcam();
     } else {
       setWebcamRunning(true);
       enableWebcamButton.innerText = "DISABLE PREDICTIONS";
+      startWebcam();
     }
+  };
+
+  const startWebcam = () => {
     const constraints = { video: true };
 
     navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
@@ -61,6 +72,19 @@ const FaceLandmarkerComponent = () => {
     });
   };
 
+  const stopWebcam = () => {
+    // Stop the webcam stream
+    const stream = videoRef.current.srcObject;
+    const tracks = stream.getTracks();
+    tracks.forEach((track) => track.stop());
+
+    // Remove the srcObject to release the webcam
+    videoRef.current.srcObject = stream;
+    // Cancel the animation frame to stop predictions
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+    }
+  };
   const predictWebcam = async () => {
     const video = videoRef.current;
     if (!video.videoWidth || !video.videoHeight) {
@@ -134,12 +158,85 @@ const FaceLandmarkerComponent = () => {
     }
 
     drawBlendShapes(videoBlendShapesRef.current, results.faceBlendshapes);
+    let categories = {
+      categories: [
+        /* Array elements */
+      ],
+      headIndex: -1,
+      headName: "",
+    };
+    categories = results.faceBlendshapes[0];
+    //console.log(categories);
+    if (categories && categories.categories) {
+      let jawOpenElement = categories.categories.find(
+        (item) => item.categoryName === "jawOpen"
+      );
+      let jawcloseElement = categories.categories.find(
+        (item) => item.categoryName === "mouthPucker"
+      );
+      jawopenscore = jawOpenElement["score"];
+      eee = jawcloseElement["score"];
+
+      //console.log(jawopenscore);
+      //console.log(eee);
+    } else {
+      console.error("categories or categories.categories is undefined");
+    }
 
     if (!webcamRunning) {
       window.requestAnimationFrame(predictWebcam);
+      await myDisplay(jawopenscore);
     }
-  };
+  }; //////////////
 
+  // Declare the promise outside to maintain its scope
+  /*const intervalId = setInterval(async () => {
+    count++;
+    console.log(count);
+
+    // Call myDisplay and pass the current count
+    await myDisplay(count);
+
+    // Stop after 10 counts
+    if (count >= 10) {
+      clearInterval(intervalId);
+    }
+  }, 1000);*/
+  async function myDisplay(count) {
+    let delayedPromise;
+    try {
+      // Initialize the promise when count == 5
+      if (count > 0.3) {
+        delayedPromise = new Promise(function (resolve) {
+          // Delay for a certain time (e.g., 3000 ms)
+          setTimeout(function () {
+            resolve("Ready at 8");
+          }, 3000); // delay in milliseconds
+        });
+
+        // Display count immediately at 5
+        console.log(count);
+      }
+
+      // Check if count == 8 and the delayedPromise exists
+      //if (delayedPromise) {
+      // Update the content after the delayed promise resolves
+      let y = await delayedPromise;
+      console.log(y);
+      if (jawopenscore < 0.2 && y === "Ready at 8") {
+        console.log("nice");
+        console.log(count);
+      }
+      //}
+
+      // Directly display count if count is greater than 5 but not specifically 5 or 8
+      //if (count > 5 && count !== 8) {
+      //document.getElementById("demo").innerHTML = count;
+      //}
+    } catch (error) {
+      console.error("Error in myDisplay:", error);
+    }
+  } /////////*/
   const drawBlendShapes = (el, blendShapes) => {
     if (!blendShapes || !blendShapes.length) {
       return;
