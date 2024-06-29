@@ -12,7 +12,6 @@ const FaceLandmarkerComponent = () => {
   let eee = 0;
   let jawopenscore;
   let animationFrameId;
-  let success = null;
 
   useEffect(() => {
     const initializeFaceLandmarker = async () => {
@@ -207,7 +206,7 @@ const FaceLandmarkerComponent = () => {
           // Delay for a certain time (e.g., 3000 ms)
           setTimeout(function () {
             resolve("Ready at 8");
-          }, 100); // delay in milliseconds
+          }, 3000); // delay in milliseconds
         });
 
         // Display count immediately at 5
