@@ -1,13 +1,15 @@
 import React from "react";
-import HandposeComponent from "./Components/model";
+import Model1ComponentComponent from "./Components/model1";
 import FaceLandmarkerComponent from "./Components/face";
+import SequentialRenderer from "./Components/scroll";
 import "./App.css";
+import ParticlesComponent from "./Components/particlesbackground";
 
 function App() {
   return (
     <div className="App">
-      <div className="HandposeComponent">
-        <HandposeComponent />
+      <div>
+        <SequentialRenderer />
       </div>
     </div>
   );

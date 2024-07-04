@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
+import "./model.css";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
-import "./handpose.css";
 import { drawHand } from "./utilities";
 import * as fp from "fingerpose";
 import victory from "./victory.png";
@@ -18,11 +18,11 @@ const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 const { FingerCurl, FingerDirection } = fp;
 let Try = "Try Again";
-
+let ok = 0;
 let UA = 0;
 let delay = 100;
 
-const HandposeComponent = () => {
+const Model3Component = ({ onEventHappened }) => {
   const [faceLandmarker, setFaceLandmarker] = useState(null);
   const [webcamRunning, setWebcamRunning] = useState(false);
   const [enableWebcamButton, setEnableWebcamButton] = useState(null);
@@ -141,9 +141,9 @@ const HandposeComponent = () => {
 
               if (maxScoreGestureScore > 8) {
                 if (maxScoreGestureName === "AAA" && UA != 2) {
-                  console.log("UA:", UA);
-                  console.log("UAword:", UAword);
-                  console.log("maxScoreGestureName:", maxScoreGestureName);
+                  //console.log("UA:", UA);
+                  //console.log("UAword:", UAword);
+                  // console.log("maxScoreGestureName:", maxScoreGestureName);
                   //SpeechRecognition.startListening();
                   //console.log(currentTranscript);
                   UA = 1;
@@ -155,7 +155,7 @@ const HandposeComponent = () => {
                   //UAword= 0;
                 }
 
-                console.log("Gesture with Max Score:", maxScoreGestureName);
+                //console.log("Gesture with Max Score:", maxScoreGestureName);
               } else {
                 setEmoji(victory);
               }
@@ -183,8 +183,9 @@ const HandposeComponent = () => {
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       console.log("Transcript:", transcript);
-      if (transcript === "Boy." && UA == 2) {
+      if (transcript === "Boy." && UA == 2 && ok == 1) {
         console.log("correct broh");
+        onEventHappened();
         //setTimeout(() => {
         Try = "Correct broh";
         setEmoji("victory" || null);
@@ -193,6 +194,7 @@ const HandposeComponent = () => {
         //setEmoji("victory" || null);
 
         UA = 0;
+        ok = 0;
       }
     }
   }, [transcript, browserSupportsSpeechRecognition]);
@@ -203,7 +205,6 @@ const HandposeComponent = () => {
 
   const videoBlendShapesRef = useRef(null);
   const demosSectionRef = useRef(null);
-  let eee = 0;
   let jawopenscore;
   let animationFrameId;
 
@@ -276,6 +277,10 @@ const HandposeComponent = () => {
     }
   };
   const predictWebcam = async () => {
+    if (!webcamRef.current) {
+      console.log("Webcam ref is not yet initialized.");
+      return;
+    }
     const video = webcamRef.current.video;
     if (!video.videoWidth || !video.videoHeight) {
       console.log("Video dimensions are not ready.");
@@ -361,11 +366,7 @@ const HandposeComponent = () => {
       let jawOpenElement = categories.categories.find(
         (item) => item.categoryName === "jawOpen"
       );
-      let jawcloseElement = categories.categories.find(
-        (item) => item.categoryName === "mouthPucker"
-      );
       jawopenscore = jawOpenElement["score"];
-      eee = jawcloseElement["score"];
 
       //console.log(jawopenscore);
       //console.log(eee);
@@ -400,7 +401,7 @@ const HandposeComponent = () => {
         delayedPromise = new Promise(function (resolve) {
           // Delay for a certain time (e.g., 3000 ms)
           setTimeout(function () {
-            resolve("Ready at 8");
+            resolve("ok");
           }, 3000); // delay in milliseconds
         });
 
@@ -413,7 +414,8 @@ const HandposeComponent = () => {
       // Update the content after the delayed promise resolves
       let y = await delayedPromise;
       console.log(y);
-      if (jawopenscore < 0.2 && y === "Ready at 8") {
+      if (jawopenscore < 0.2 && y === "ok") {
+        ok = 1;
         console.log("nice");
         console.log(count);
       }
@@ -432,7 +434,7 @@ const HandposeComponent = () => {
       return;
     }
 
-    let htmlMaker = "";
+    /*let htmlMaker = "";
     blendShapes[0].categories.forEach((shape) => {
       htmlMaker += `
         <li class="blend-shapes-item">
@@ -446,110 +448,117 @@ const HandposeComponent = () => {
       `;
     });
 
-    el.innerHTML = htmlMaker;
+    el.innerHTML = htmlMaker;*/
   };
 
   return (
-    <div className="handpose">
-      <header className="handpose-header">
-        <Webcam
-          ref={webcamRef}
-          style={{
-            position: "absolute", // Position the webcam absolutely
-            top: 0, // Align it to the top of the parent container
-            left: 0, // Align it to the left of the parent container
-            zIndex: 9, // Maintain the stacking context
-            width: 500, // Set width
-            height: 355, // Set height
-            borderRadius: "70px", // Set border radius
-            boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.7)", // Set box shadow
-          }}
-        />
-        <button
-          id="webcamButton"
-          className="mdc-button mdc-button--raised"
-          onClick={enableCam}
-          ref={(button) => setEnableWebcamButton(button)}
-        >
-          <span className="mdc-button__ripple"></span>
-          <span className="mdc-button__label">ENABLE WEBCAM</span>
-        </button>
-        {emoji !== null && (
-          <img
-            src={images[emoji]}
+    <body className="body">
+      <div className="handpose">
+        <header className="handpose-header">
+          <div className="Webcam">
+            <Webcam
+              ref={webcamRef}
+              style={{
+                position: "absolute", // Position the webcam absolutely
+                top: 0, // Align it to the top of the parent container
+                left: 0, // Align it to the left of the parent container
+                zIndex: 9, // Maintain the stacking context
+                width: 500, // Set width
+                height: 355, // Set height
+                borderRadius: "70px", // Set border radius
+                boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.7)", // Set box shadow
+              }}
+            />
+          </div>
+          <button
+            id="webcamButton"
+            className="mdc-button mdc-button--raised"
+            onClick={enableCam}
+            ref={(button) => setEnableWebcamButton(button)}
+          >
+            <span className="mdc-button__ripple"></span>
+            <span className="mdc-button__label">ENABLE WEBCAM</span>
+          </button>
+          {emoji !== null && (
+            <img
+              src={images[emoji]}
+              style={{
+                position: "absolute",
+                marginRight: "800px",
+                textAlign: "center",
+                zIndex: 10,
+                width: 500,
+                height: 355,
+              }}
+              alt="Emoji"
+            />
+          )}
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: "absolute", // Position the webcam absolutely
+              top: 0, // Align it to the top of the parent container
+              left: 0, // Align it to the left of the parent container
+              zIndex: 9, // Maintain the stacking context
+              width: 500, // Set width
+              height: 355, // Set height
+              borderRadius: "70px", // Set border radius
+              boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.7)", // Set box shadow
+            }}
+          />
+          <div
             style={{
               position: "absolute",
-              marginRight: "800px",
-              textAlign: "center",
-              zIndex: 10,
-              width: 500,
-              height: 355,
+              left: "75%", // Center horizontally
+              top: "200px", // Adjust this value to move it up or down
+              transform: "translateX(-50%)",
+              zIndex: 0,
+              width: 800,
+              height: 800,
             }}
-            alt="Emoji"
-          />
-        )}
-        <canvas
-          ref={canvasRef}
-          style={{
-            position: "absolute", // Position the webcam absolutely
-            top: 0, // Align it to the top of the parent container
-            left: 0, // Align it to the left of the parent container
-            zIndex: 9, // Maintain the stacking context
-            width: 500, // Set width
-            height: 355, // Set height
-            borderRadius: "70px", // Set border radius
-            boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.7)", // Set box shadow
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            left: "75%", // Center horizontally
-            top: "200px", // Adjust this value to move it up or down
-            transform: "translateX(-50%)",
-            zIndex: 0,
-            width: 800,
-            height: 800,
-          }}
-        >
-          {/* YouTube component */}
-          <YouTube videoId={videoId} />
-        </div>
-
-        {browserSupportsSpeechRecognition && (
-          <div className="microphone-container" style={{}}>
-            <p>Microphone: {listening ? "on" : "off"}</p>
-            <button
-              onClick={SpeechRecognition.startListening}
-              className="start"
-            >
-              Start
-            </button>
-            <button onClick={SpeechRecognition.stopListening} className="stop">
-              Stop
-            </button>
-            <button onClick={resetTranscript} className="reset">
-              Reset
-            </button>
-
-            <p>{transcript}</p>
+          >
+            {/* YouTube component */}
+            <YouTube videoId={videoId} />
           </div>
-        )}
-        <div
-          className="colored-box"
-          style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.6)" }}
-        >
-          <p style={{ fontWeight: "bold" }}>Now It's Your Time to Shine !</p>
+
+          {browserSupportsSpeechRecognition && (
+            <div className="microphone-container" style={{}}>
+              <p>Microphone: {listening ? "on" : "off"}</p>
+              <button
+                onClick={SpeechRecognition.startListening}
+                className="start"
+              >
+                Start
+              </button>
+              <button
+                onClick={SpeechRecognition.stopListening}
+                className="stop"
+              >
+                Stop
+              </button>
+              <button onClick={resetTranscript} className="reset">
+                Reset
+              </button>
+
+              <p>{transcript}</p>
+            </div>
+          )}
+          <div
+            className="colored-box"
+            style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.6)" }}
+          >
+            <p style={{ fontWeight: "bold" }}>Now It's Your Time to Shine !</p>
+          </div>
+        </header>
+        <div className="blend-shapes">
+          <ul className="blend-shapes-list" ref={videoBlendShapesRef}></ul>
         </div>
-      </header>
-      <div className="blend-shapes">
-        <ul className="blend-shapes-list" ref={videoBlendShapesRef}></ul>
       </div>
-    </div>
+    </body>
   );
 };
 
-export default HandposeComponent;
+export default Model3Component;
 
 /*const FaceLandmarkerComponent = () => {
 
