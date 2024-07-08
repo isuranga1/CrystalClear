@@ -12,6 +12,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
+import ParticlesBackground from "./particlesbackground";
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 // Import FingerCurl and FingerDirection from fingerpose
@@ -22,7 +23,7 @@ let ok = 0;
 let UA = 0;
 let delay = 100;
 
-const Model3Component = ({ onEventHappened }) => {
+const Model1Component = ({ onEventHappened }) => {
   const [faceLandmarker, setFaceLandmarker] = useState(null);
   const [webcamRunning, setWebcamRunning] = useState(false);
   const [enableWebcamButton, setEnableWebcamButton] = useState(null);
@@ -186,6 +187,7 @@ const Model3Component = ({ onEventHappened }) => {
       if (transcript === "Boy." && UA == 2 && ok == 1) {
         console.log("correct broh");
         onEventHappened();
+
         //setTimeout(() => {
         Try = "Correct broh";
         setEmoji("victory" || null);
@@ -452,8 +454,9 @@ const Model3Component = ({ onEventHappened }) => {
   };
 
   return (
-    <body className="body">
-      <div className="handpose">
+    <body>
+      <div className="wrapper">
+        <ParticlesBackground />
         <header className="handpose-header">
           <div className="Webcam">
             <Webcam
@@ -472,7 +475,7 @@ const Model3Component = ({ onEventHappened }) => {
           </div>
           <button
             id="webcamButton"
-            className="mdc-button mdc-button--raised"
+            className="webcamButton"
             onClick={enableCam}
             ref={(button) => setEnableWebcamButton(button)}
           >
@@ -558,7 +561,7 @@ const Model3Component = ({ onEventHappened }) => {
   );
 };
 
-export default Model3Component;
+export default Model1Component;
 
 /*const FaceLandmarkerComponent = () => {
 

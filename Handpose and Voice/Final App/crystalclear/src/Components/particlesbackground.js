@@ -31,7 +31,7 @@ const ParticlesComponent = (props) => {
       autoPlay: true,
       background: {
         color: {
-          value: "#37eefb",
+          value: "#00FFAA",
         },
         image: "",
         position: "",
@@ -210,7 +210,7 @@ const ParticlesComponent = (props) => {
           },
         },
         color: {
-          value: "#ffffff",
+          value: "#017F44",
           animation: {
             h: {
               count: 0,
@@ -332,7 +332,7 @@ const ParticlesComponent = (props) => {
         opacity: {
           value: {
             min: 0.3,
-            max: 0.8,
+            max: 0.5,
           },
           animation: {
             count: 0,
@@ -367,7 +367,7 @@ const ParticlesComponent = (props) => {
         size: {
           value: {
             min: 1,
-            max: 10,
+            max: 20,
           },
           animation: {
             count: 0,
