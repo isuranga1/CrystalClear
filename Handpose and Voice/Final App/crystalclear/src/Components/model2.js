@@ -1,17 +1,24 @@
 import React, { useRef, useState, useEffect } from "react";
-import "./model1.css";
+import "./model2.css";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import { drawHand } from "./utilities";
 import * as fp from "fingerpose";
 import victory from "./victory.png";
+import Demo from "./Demo.mp4";
 import thumbs_up from "./thumbs_up.png";
 import YouTube from "react-youtube";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
+import ParticlesBackground from "./particlesbackground";
+import { Player } from "video-react";
+import "./videoreact.css";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Box from "@mui/material/Box";
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 // Import FingerCurl and FingerDirection from fingerpose
@@ -153,6 +160,9 @@ const Model2Component = ({ onEventHappened }) => {
 
                   UA = 2;
                   //UAword= 0;
+                  setTimeout(() => {
+                    UA = 0;
+                  }, 3000);
                 }
 
                 //console.log("Gesture with Max Score:", maxScoreGestureName);
@@ -185,12 +195,13 @@ const Model2Component = ({ onEventHappened }) => {
       console.log("Transcript:", transcript);
       if (transcript === "Boy." && UA == 2 && ok == 1) {
         console.log("correct broh");
+        onEventHappened();
 
         //setTimeout(() => {
         Try = "Correct broh";
         setEmoji("victory" || null);
         //}, 1000);
-        onEventHappened();
+
         //setEmoji("victory" || null);
 
         UA = 0;
@@ -452,106 +463,51 @@ const Model2Component = ({ onEventHappened }) => {
   };
 
   return (
-    <body className="body">
-      <div className="handpose">
-        <header className="handpose-header">
-          <div className="Webcam">
-            <Webcam
-              ref={webcamRef}
-              style={{
-                position: "absolute", // Position the webcam absolutely
-                top: 0, // Align it to the top of the parent container
-                left: 0, // Align it to the left of the parent container
-                zIndex: 9, // Maintain the stacking context
-                width: 500, // Set width
-                height: 355, // Set height
-                borderRadius: "70px", // Set border radius
-                boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.7)", // Set box shadow
-              }}
-            />
-          </div>
-          <button
-            id="webcamButton"
-            className="mdc-button mdc-button--raised"
-            onClick={enableCam}
-            ref={(button) => setEnableWebcamButton(button)}
-          >
-            <span className="mdc-button__ripple"></span>
-            <span className="mdc-button__label">ENABLE WEBCAM</span>
-          </button>
-          {emoji !== null && (
-            <img
-              src={images[emoji]}
-              style={{
-                position: "absolute",
-                marginRight: "800px",
-                textAlign: "center",
-                zIndex: 10,
-                width: 500,
-                height: 355,
-              }}
-              alt="Emoji"
-            />
-          )}
-          <canvas
-            ref={canvasRef}
-            style={{
-              position: "absolute", // Position the webcam absolutely
-              top: 0, // Align it to the top of the parent container
-              left: 0, // Align it to the left of the parent container
-              zIndex: 9, // Maintain the stacking context
-              width: 500, // Set width
-              height: 355, // Set height
-              borderRadius: "70px", // Set border radius
-              boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.7)", // Set box shadow
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              left: "75%", // Center horizontally
-              top: "200px", // Adjust this value to move it up or down
-              transform: "translateX(-50%)",
-              zIndex: 0,
-              width: 800,
-              height: 800,
-            }}
-          >
-            {/* YouTube component */}
-            <YouTube videoId={videoId} />
-          </div>
+    <body>
+      <div className="wrapper">
+        <ParticlesBackground />
 
-          {browserSupportsSpeechRecognition && (
-            <div className="microphone-container" style={{}}>
-              <p>Microphone: {listening ? "on" : "off"}</p>
-              <button
-                onClick={SpeechRecognition.startListening}
-                className="start"
-              >
-                Start
-              </button>
-              <button
-                onClick={SpeechRecognition.stopListening}
-                className="stop"
-              >
-                Stop
-              </button>
-              <button onClick={resetTranscript} className="reset">
-                Reset
-              </button>
-
-              <p>{transcript}</p>
+        {browserSupportsSpeechRecognition && (
+          <div className="microphone-container">
+            <p>Microphone: {listening ? "on" : "off"}</p>
+            <button
+              onClick={SpeechRecognition.startListening}
+              className="start"
+            >
+              Start
+            </button>
+            <button onClick={SpeechRecognition.stopListening} className="stop">
+              Stop
+            </button>
+            <button onClick={resetTranscript} className="reset">
+              Reset
+            </button>{" "}
+            <button
+              id="webcamButton"
+              className="webcamButton"
+              onClick={enableCam}
+              ref={(button) => setEnableWebcamButton(button)}
+            >
+              <span className="mdc-button__ripple"></span>
+              <span className="mdc-button__label">ENABLE WEBCAM</span>
+            </button>
+            <p>{transcript}</p>
+          </div>
+        )}
+        <div className="webcamvid">
+          <div className="wrapperwebcam">
+            <div className="Webcam">
+              <Webcam ref={webcamRef} />
             </div>
-          )}
-          <div
-            className="colored-box"
-            style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.6)" }}
-          >
-            <p style={{ fontWeight: "bold" }}>Now It's Your Time to Shine !</p>
+            <div>
+              <canvas className="Canvas" ref={canvasRef} />
+            </div>
           </div>
-        </header>
-        <div className="blend-shapes">
-          <ul className="blend-shapes-list" ref={videoBlendShapesRef}></ul>
+          <div className="video-container">
+            <Player>
+              <source src={Demo} />
+            </Player>
+          </div>
         </div>
       </div>
     </body>

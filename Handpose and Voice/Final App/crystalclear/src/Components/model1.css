@@ -59,42 +59,90 @@
   }
  
  
-  .microphone-container {
+  .microphone-container1 {
     position: absolute;
     box-shadow: 0px 20px 10px rgba(255, 151, 231, 0.7);
-    left: 50%;
+    left: 46%;
     transform: translateX(-50%);
-    padding: 10px;
-    background-color: #8cb8e4;
-    border-radius: 8px;
+    padding: 20px;
+    background-color: #f8ffc2;
+    border-radius: 30px;
     
     margin-top: 15%;
    
   }
   
-  .microphone-container p {
+  .microphone-container1 p {
     margin: 0;
   }
   
-  .microphone-container button {
-    padding: 8px 16px;
+
+  .microphone-container1 button {
+    position: relative;
     margin-right: 8px;
+    font-size: 17px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1em 2.5em;
+    display: inline-block;
+    border-radius: 6em;
+    transition: all .2s;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    color: black;
+    background-color: rgb(255, 255, 255);
+   }
+   
+   .microphone-container1 button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+   }
+   
+   .microphone-container1 button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+   }
+   
+   .microphone-container1 button::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+   }
+   
+   .microphone-container1 button::after {
+    background-color: #fff;
+   }
+   
+   .microphone-container1 button:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+   }
+  
+  .microphone-container1 button.start {
+    background-color: #7dfb82;
+    color: #000000;
   }
   
-  .microphone-container button.start {
-    background-color: #7ff183;
+  .microphone-container1 button.stop {
+    background-color: #f34236;
     color: #fff;
   }
   
-  .microphone-container button.stop {
-    background-color: #f47f77;
-    color: #fff;
+  .microphone-container1 button.reset {
+    background-color: #00e5ff;
+    color: #000000;
+    
   }
-  
-  .microphone-container button.reset {
-    background-color: #72baf5;
-    color: #fff;
+  .microphone-container1 button.webcamButton {
+    background-color: #ffdd6f;
+    color: #000000;
+    
   }

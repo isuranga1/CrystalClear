@@ -19,6 +19,8 @@ import "./videoreact.css";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
+import Popup from "./Popup";
+
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 // Import FingerCurl and FingerDirection from fingerpose
@@ -30,6 +32,7 @@ let UA = 0;
 let delay = 100;
 
 const Model1Component = ({ onEventHappened }) => {
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [faceLandmarker, setFaceLandmarker] = useState(null);
   const [webcamRunning, setWebcamRunning] = useState(false);
   const [enableWebcamButton, setEnableWebcamButton] = useState(null);
@@ -160,6 +163,9 @@ const Model1Component = ({ onEventHappened }) => {
 
                   UA = 2;
                   //UAword= 0;
+                  setTimeout(() => {
+                    UA = 0;
+                  }, 3000);
                 }
 
                 //console.log("Gesture with Max Score:", maxScoreGestureName);
@@ -190,9 +196,9 @@ const Model1Component = ({ onEventHappened }) => {
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       console.log("Transcript:", transcript);
-      if (transcript === "Boy." && UA == 2 && ok == 1) {
+      if (transcript === "Joy." && UA == 2 && ok == 1) {
         console.log("correct broh");
-        onEventHappened();
+        setIsOpenPopup(true);
 
         //setTimeout(() => {
         Try = "Correct broh";
@@ -206,6 +212,21 @@ const Model1Component = ({ onEventHappened }) => {
       }
     }
   }, [transcript, browserSupportsSpeechRecognition]);
+
+  useEffect(() => {
+    if (isOpenPopup) {
+      const timer = setTimeout(() => {
+        // Add the logic you want to execute after 3 seconds here
+        console.log("Popup has been open for 3 seconds");
+        // For example, you can close the popup after 3 seconds
+        setIsOpenPopup(false);
+        onEventHappened();
+      }, 3000); // 3 seconds delay
+
+      // Cleanup the timeout if the component unmounts or isOpenPopup changes
+      return () => clearTimeout(timer);
+    }
+  }, [isOpenPopup]);
 
   useEffect(() => {
     console.log("Emoji updated:", emoji);
@@ -463,9 +484,9 @@ const Model1Component = ({ onEventHappened }) => {
     <body>
       <div className="wrapper">
         <ParticlesBackground />
-
+        <div>{isOpenPopup && <Popup setIsOpenPopup={setIsOpenPopup} />}</div>
         {browserSupportsSpeechRecognition && (
-          <div className="microphone-container">
+          <div className="microphone-container1">
             <p>Microphone: {listening ? "on" : "off"}</p>
             <button
               onClick={SpeechRecognition.startListening}

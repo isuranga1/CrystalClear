@@ -17,9 +17,9 @@ import {
 } from "@chakra-ui/react";
 
 const steps = [
-  { title: "Welcome", description: " " },
-  { title: "Doing Good", description: " " },
-  { title: "Almost Done", description: " " },
+  { title: "Give it a shot :) ", description: " " },
+  { title: "Doing Good !", description: " " },
+  { title: "Almost Done ", description: " " },
 ];
 
 function ProgressBar({ index }) {

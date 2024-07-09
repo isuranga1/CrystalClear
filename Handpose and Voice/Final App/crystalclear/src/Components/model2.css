@@ -1,0 +1,100 @@
+.wrapper{
+
+    position: relative;
+    margin-top: 50%;
+  }
+  
+    .Webcam {
+      margin-top: -10%;
+      left:1%;
+      position: absolute; /* Position the webcam absolutely */
+     /* Align it to the left of the parent container */
+      z-index: 9; /* Maintain the stacking context */
+      width: 475px; /* Set width */
+      height: auto; /* Set height */
+      border-radius: 20px; 
+      overflow: hidden;
+      box-shadow: 0px 20px 10px rgba(86, 106, 255, 0.7);/* Set border radius */
+      /* Uncomment the next line to add a box shadow */
+      /* box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.7); */
+    }
+  
+    .Canvas{
+  
+      margin-top: -10%;
+      left:1%;
+        position: absolute; 
+        /* Align it to the left of the parent container */
+        z-index: 9; /* Maintain the stacking context */
+        width: 475px; /* Set width */
+        height: 355px; /* Set height */
+        border-radius: 20px;
+     
+    }
+    .wrapperwebcam {
+      position: relative;
+     margin-bottom: 60%; /* Adjust height */
+    }
+    .video-container {
+      width: 30%;
+      left: 68%;
+      margin-top: -14%;
+      height: auto; /* Adjust width as needed */
+      /* Center the video container */
+      position: absolute;
+      border-radius: 20px;  
+      overflow: hidden;
+      background-color: black;
+      box-shadow: 0px 20px 10px rgba(86, 106, 255, 0.7); 
+     
+    }
+    
+    .webcamvid{
+  
+      position: relative;
+      margin-top: -35%;
+      width: 100%;
+      height: 100%;
+  
+    }
+   
+   
+    .microphone-container {
+      position: absolute;
+      box-shadow: 0px 20px 10px rgba(255, 151, 231, 0.7);
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px;
+      background-color: #8cb8e4;
+      border-radius: 8px;
+      
+      margin-top: 15%;
+     
+    }
+    
+    .microphone-container p {
+      margin: 0;
+    }
+    
+    .microphone-container button {
+      padding: 8px 16px;
+      margin-right: 8px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .microphone-container button.start {
+      background-color: #7ff183;
+      color: #fff;
+    }
+    
+    .microphone-container button.stop {
+      background-color: #f47f77;
+      color: #fff;
+    }
+    
+    .microphone-container button.reset {
+      background-color: #72baf5;
+      color: #fff;
+    }

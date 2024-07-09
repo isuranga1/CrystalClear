@@ -5,6 +5,7 @@ import SequentialRenderer from "./Components/scroll";
 import "./App.css";
 import ParticlesComponent from "./Components/particlesbackground";
 import ProgressBar from "./Components/ProgressionBar";
+import ColorButtons from "./Components/Button";
 
 function App() {
   return (
