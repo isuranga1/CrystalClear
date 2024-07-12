@@ -1,10 +1,13 @@
 import { AiOutlineCloseSquare } from "react-icons/ai";
+import GreatJob from "./GreatJob.png";
+import Success from "./success.mp3";
 const Popup = ({ setIsOpenPopup }) => {
   return (
     <div
       onClick={setIsOpenPopup.bind(this, false)}
       style={{
         position: "fixed",
+        zIndex: 9999,
         background: "rgba(0,0,0,0.6)",
         top: 0,
         left: 0,
@@ -21,18 +24,15 @@ const Popup = ({ setIsOpenPopup }) => {
         onClick={(e) => e.stopPropagation()}
         style={{
           position: "relative",
-          background: "white",
+          background: "transparent",
           borderRadius: "8px",
-          width: "250px",
+          width: "60%",
+          height: "60%",
           padding: "20px 10px",
           animation: "dropTop .3s linear",
         }}
       >
-        {/* Header */}
-        <div
-          style={{ borderBottom: "1px solid lightgray", paddingBottom: "10px" }}
-        >
-          <h1 style={{ margin: 0 }}>Title here</h1>
+        <div>
           <div
             onClick={setIsOpenPopup.bind(this, false)}
             style={{
@@ -42,22 +42,35 @@ const Popup = ({ setIsOpenPopup }) => {
               right: 10,
             }}
           >
-            <AiOutlineCloseSquare />
+            {/*<AiOutlineCloseSquare />*/}
           </div>
         </div>
         {/* Body */}
         <div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-            Perferendis, molestiae.
+          <img
+            src={GreatJob}
+            alt="Description"
+            style={{ position: "relative", marginTop: "-25%" }}
+          />
+          <p
+            style={{
+              fontWeight: "bold",
+              fontFamily: "Comic Sans MS",
+              position: "absolute",
+              top: "120%",
+              left: "27%",
+              fontSize: "250%",
+              color: "#5DFFB3",
+            }}
+          >
+            Lets try another one !
           </p>
+          <audio autoPlay style={{ display: "none" }}>
+            <source src={Success} type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
         </div>
         {/* Footer */}
-        <footer
-          style={{ borderTop: "1px solid lightgray", paddingTop: "10px" }}
-        >
-          Footer here
-        </footer>
       </div>
     </div>
   );

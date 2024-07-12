@@ -16,10 +16,8 @@ import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3"
 import ParticlesBackground from "./particlesbackground";
 import { Player } from "video-react";
 import "./videoreact.css";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Box from "@mui/material/Box";
 import Popup from "./Popup";
+import ExampleCard1 from "./ExampleCard1";
 
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
@@ -150,7 +148,7 @@ const Model1Component = ({ onEventHappened }) => {
               const maxScoreGestureScore = gestureScores[maxScoreIndex];
 
               if (maxScoreGestureScore > 8) {
-                if (maxScoreGestureName === "AAA" && UA != 2) {
+                if (maxScoreGestureName === "AAA" && UA !== 2) {
                   //console.log("UA:", UA);
                   //console.log("UAword:", UAword);
                   // console.log("maxScoreGestureName:", maxScoreGestureName);
@@ -196,7 +194,7 @@ const Model1Component = ({ onEventHappened }) => {
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       console.log("Transcript:", transcript);
-      if (transcript === "Joy." && UA == 2 && ok == 1) {
+      if (transcript === "Boy." && UA === 2 && ok === 1) {
         console.log("correct broh");
         setIsOpenPopup(true);
 
@@ -484,7 +482,7 @@ const Model1Component = ({ onEventHappened }) => {
     <body>
       <div className="wrapper">
         <ParticlesBackground />
-        <div>{isOpenPopup && <Popup setIsOpenPopup={setIsOpenPopup} />}</div>
+
         {browserSupportsSpeechRecognition && (
           <div className="microphone-container1">
             <p>Microphone: {listening ? "on" : "off"}</p>
@@ -512,10 +510,14 @@ const Model1Component = ({ onEventHappened }) => {
             <p>{transcript}</p>
           </div>
         )}
+        <div>{isOpenPopup && <Popup setIsOpenPopup={setIsOpenPopup} />}</div>
         <div className="webcamvid">
           <div className="wrapperwebcam">
             <div className="Webcam">
               <Webcam ref={webcamRef} />
+            </div>
+            <div>
+              <ExampleCard1 />
             </div>
             <div>
               <canvas className="Canvas" ref={canvasRef} />

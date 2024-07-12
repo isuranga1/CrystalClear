@@ -50,7 +50,7 @@ function ProgressBar({ index }) {
             </StepIndicator>
 
             <Box p={1} m={1} ml={10} mr={10} flexShrink="0">
-              <StepTitle>{step.title}</StepTitle>
+              <StepTitle fontSize="2xl">{step.title}</StepTitle>
               <StepDescription>{step.description}</StepDescription>
             </Box>
 
