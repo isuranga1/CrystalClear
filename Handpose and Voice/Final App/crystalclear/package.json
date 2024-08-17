@@ -23,6 +23,7 @@
     "@tsparticles/all": "^3.5.0",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/shape-star": "^3.5.0",
+    "crystalclear": "file:",
     "fingerpose": "^0.1.0",
     "framer-motion": "^11.2.13",
     "material-components-web": "^14.0.0",

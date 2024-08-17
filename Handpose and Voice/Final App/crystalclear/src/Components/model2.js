@@ -16,9 +16,9 @@ import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3"
 import ParticlesBackground from "./particlesbackground";
 import { Player } from "video-react";
 import "./videoreact.css";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Box from "@mui/material/Box";
+import Popup from "./Popup";
+import ExampleCard1 from "./ExampleCard1";
+
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
 // Import FingerCurl and FingerDirection from fingerpose
@@ -30,6 +30,7 @@ let UA = 0;
 let delay = 100;
 
 const Model2Component = ({ onEventHappened }) => {
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
   const [faceLandmarker, setFaceLandmarker] = useState(null);
   const [webcamRunning, setWebcamRunning] = useState(false);
   const [enableWebcamButton, setEnableWebcamButton] = useState(null);
@@ -147,7 +148,7 @@ const Model2Component = ({ onEventHappened }) => {
               const maxScoreGestureScore = gestureScores[maxScoreIndex];
 
               if (maxScoreGestureScore > 8) {
-                if (maxScoreGestureName === "AAA" && UA != 2) {
+                if (maxScoreGestureName === "AAA" && UA !== 2) {
                   //console.log("UA:", UA);
                   //console.log("UAword:", UAword);
                   // console.log("maxScoreGestureName:", maxScoreGestureName);
@@ -193,9 +194,9 @@ const Model2Component = ({ onEventHappened }) => {
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       console.log("Transcript:", transcript);
-      if (transcript === "Boy." && UA == 2 && ok == 1) {
+      if (transcript === "Boy." && UA === 2 && ok === 1) {
         console.log("correct broh");
-        onEventHappened();
+        setIsOpenPopup(true);
 
         //setTimeout(() => {
         Try = "Correct broh";
@@ -209,6 +210,21 @@ const Model2Component = ({ onEventHappened }) => {
       }
     }
   }, [transcript, browserSupportsSpeechRecognition]);
+
+  useEffect(() => {
+    if (isOpenPopup) {
+      const timer = setTimeout(() => {
+        // Add the logic you want to execute after 3 seconds here
+        console.log("Popup has been open for 3 seconds");
+        // For example, you can close the popup after 3 seconds
+        setIsOpenPopup(false);
+        onEventHappened();
+      }, 3000); // 3 seconds delay
+
+      // Cleanup the timeout if the component unmounts or isOpenPopup changes
+      return () => clearTimeout(timer);
+    }
+  }, [isOpenPopup]);
 
   useEffect(() => {
     console.log("Emoji updated:", emoji);
@@ -468,7 +484,7 @@ const Model2Component = ({ onEventHappened }) => {
         <ParticlesBackground />
 
         {browserSupportsSpeechRecognition && (
-          <div className="microphone-container">
+          <div className="microphone-container1">
             <p>Microphone: {listening ? "on" : "off"}</p>
             <button
               onClick={SpeechRecognition.startListening}
@@ -494,10 +510,14 @@ const Model2Component = ({ onEventHappened }) => {
             <p>{transcript}</p>
           </div>
         )}
+        <div>{isOpenPopup && <Popup setIsOpenPopup={setIsOpenPopup} />}</div>
         <div className="webcamvid">
           <div className="wrapperwebcam">
             <div className="Webcam">
               <Webcam ref={webcamRef} />
+            </div>
+            <div>
+              <ExampleCard1 />
             </div>
             <div>
               <canvas className="Canvas" ref={canvasRef} />

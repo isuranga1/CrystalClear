@@ -4,13 +4,15 @@ import { motion } from 'framer-motion';
 
 import { Appwrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
-import './Work.scss';
+import { useNavigate } from 'react-router-dom';
+import './Learn.scss';
 
-const Work = () => {
+const Learn = () => {
   const [works, setWorks] = useState([]);
   const [filterWork, setFilterWork] = useState([]);
   const [activeFilter, setActiveFilter] = useState('All');
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const query = '*[_type == "works"]';
@@ -22,18 +24,28 @@ const Work = () => {
   }, []);
 
   const handleWorkFilter = (item) => {
-    setActiveFilter(item);
-    setAnimateCard([{ y: 100, opacity: 0 }]);
+    if (item === 'Actions') {
+      navigate('/actions'); // Navigate to the Writing component when "Writing" is clicked
+    } else {
+      setActiveFilter(item);
+      setAnimateCard([{ y: 100, opacity: 0 }]);
 
-    setTimeout(() => {
-      setAnimateCard([{ y: 0, opacity: 1 }]);
+      setTimeout(() => {
+        setAnimateCard([{ y: 0, opacity: 1 }]);
 
-      if (item === 'All') {
-        setFilterWork(works);
-      } else {
-        setFilterWork(works.filter((work) => work.tags.includes(item)));
-      }
-    }, 500);
+        if (item === 'All') {
+          setFilterWork(works);
+        } else {
+          setFilterWork(works.filter((work) => work.tags.includes(item)));
+        }
+      }, 500);
+    }
+  };
+
+  const handleWorkClick = (item) => {
+    if (item === 'Actions') {
+      navigate('/actions'); // Navigate to the Writing component when "Writing" is clicked
+    }
   };
 
   return (
@@ -58,8 +70,8 @@ const Work = () => {
         className="app__work-portfolio"
       >
         {filterWork.map((work, index) => (
-          <a href="https://crystalcleari.azurewebsites.net/">
-          <div className="app__work-item app__flex" key={index}>
+           
+          <div className="app__work-item app__flex" key={index}  onClick={() => work.tags.includes('Actions') && handleWorkClick('Actions')}>
             <div
               className="app__work-img app__flex"
             >
@@ -103,14 +115,14 @@ const Work = () => {
               </div>
             </div>
           </div>
-        </a>))}
+         ))}
       </motion.div>
     </>
   );
 };
 
 export default Appwrap(
-  MotionWrap(Work, 'app__works'),
+  MotionWrap(Learn, 'app__works'),
   'learn',
   'app__primarybg',
 );

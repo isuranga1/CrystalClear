@@ -1,0 +1,49 @@
+.procard {
+  box-sizing: border-box;
+  width: 500px;
+  height: 300px;
+  background: rgba(115, 246, 255, 0.58);
+  border: 1px solid white;
+  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6px);
+  border-radius: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-weight: bolder;
+  color: rgb(0, 0, 0);
+  position: absolute;
+  left: 33.6%;
+  margin-top:-8%;
+  box-shadow: 0px 20px 10px rgba(86, 106, 255, 0.7);
+}
+
+.procard:hover {
+  border: 1px solid rgb(162, 0, 255);
+  transform: scale(1.05);
+}
+
+.procard:active {
+  transform: scale(0.95) rotateZ(1.7deg);
+}
+
+.Boyimage{
+  position: relative;
+  right: 15%;
+  
+}
+
+.Boytext{
+  width: 50%;
+  position: relative;
+  right: 25%;
+  font-size: 34px;
+  
+}
+.Boytext .pronunciation {
+  font-size: 24px; /* Adjust the size as needed */
+}

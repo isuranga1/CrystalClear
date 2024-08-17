@@ -1,58 +1,55 @@
-import React, {useState,useEffect} from 'react'
-import {motion} from "framer-motion";
 import "./About.scss";
-import { images } from '../../constants';
-import { urlFor,client } from '../../client';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Tooltip } from 'react-tooltip'
+import { urlFor, client } from '../../client';
 import { Appwrap, MotionWrap } from '../../wrapper';
- 
 
+const About= () => {
+  const [experiences, setExperiences] = useState([]);
+  const [skills, setSkills] = useState([]);
 
-
-
-const About = () => {
-  const [abouts,setAbouts]=useState([]);
   useEffect(() => {
-    
-    const query='*[_type=="abouts"]';
-    client.fetch(query)
-    .then((data)=>setAbouts(data))
+    const query = '*[_type == "experiences"]';
+    const skillsQuery = '*[_type == "skills"]';
 
+    client.fetch(query).then((data) => {
+      setExperiences(data);
+    });
+
+    client.fetch(skillsQuery).then((data) => {
+      setSkills(data);
+    });
   }, []);
-  
-
-
-
 
   return (
-    <div className="about-container">
-      <h2 className='head-text'>
-      Jump into <span> the Story </span><span>  Jungle!</span>
-      </h2>
-      <div className='app__profiles'>
-        {abouts.map((about,index)=>(
-          <motion.div
-            whileInView={{opacity:1}}
-            whileHover={{scale:1.1}}
-            transition={{duration:0.5,type:'tween'}}
-            className='app__profile-item'
-            key={about.title+index}
-          
-          >
-              <img src={urlFor(about.imgUrl)} alt={about.title} style={{ width: '100%', height: 'auto' }}/>
-              <h2 className='bold-text' style={{marginTop:20}}> {about.title}             </h2>
-              <p className='p-text' style={{marginTop:10}}> {about.description}             </p>
+    <>
+      <h2 className="head-text">About Us</h2>
 
-          
-          </motion.div>
-
-        ))}
+      <div className="app__skills-container">
+        <motion.div className="app__skills-list">
+          {skills.map((skill) => (
+            <motion.div
+              whileInView={{ opacity: [0, 1] }}
+              transition={{ duration: 0.5 }}
+              className="app__skills-item app__flex"
+              key={skill.name}
+            >
+              <div
+                className="app__flex app__centered"
+                style={{ backgroundColor: 'rgb(255,255,255)', width: '180px', height: '180px' }}
+              >
+                <img src={urlFor(skill.icon)} alt={skill.name} style={{ width: "90%", height: "90%" ,borderRadius: '80%', overflow: 'hidden',boxShadow: '0px 0px 70px rgba(81, 186, 180, 0.3)'}} />
+              </div>
+              <p className="p-text" style={{ fontSize: '18px', fontWeight: 'bold',marginLeft:'10px',color:'black' ,marginTop:'40px'}}>{skill.name} </p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default Appwrap(
-  MotionWrap(About,'stories'),'stories',"app__whitebg"
-  
-  
-  );
+  MotionWrap(About, 'app__about'), 'about', " app__whitebg"
+);

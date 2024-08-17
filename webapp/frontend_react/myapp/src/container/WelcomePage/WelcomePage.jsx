@@ -1,5 +1,5 @@
 import React from 'react'
-import "./Header.scss";
+import "./WelcomePage.scss";
 import {motion} from "framer-motion";
 import { images } from '../../constants';
 import {Appwrap} from '../../wrapper';
@@ -18,7 +18,7 @@ const scaleVarients={
 
 
 }
-const Header = () => {
+const WelcomePage = () => {
   return (
     <div    className='app__header app__flex' style={{ marginLeft: '40px' }}>
       <motion.div
@@ -103,4 +103,4 @@ const Header = () => {
   )
 }
 
-export default Appwrap(Header,'home');
+export default Appwrap(WelcomePage,'home');

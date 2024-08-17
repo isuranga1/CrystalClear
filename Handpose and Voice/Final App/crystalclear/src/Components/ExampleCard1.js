@@ -6,7 +6,7 @@ const ExampleCard1 = () => {
   return (
     <div className="procard">
       <div className="Boyimage">
-        <img src={Boy1} alt="Description of image" />
+        <img src={Boy1} alt="Description " />
       </div>
       <div className="Boytext">
         Boy <br /> <span className="pronunciation">/bɔɪ/</span>
