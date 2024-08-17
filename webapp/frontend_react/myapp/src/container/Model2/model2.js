@@ -17,7 +17,7 @@ import ParticlesBackground from "../particlesbackground";
 import { Player } from "video-react";
 import "./videoreact.css";
 import Popup from "../Popup/Popup";
-import ExampleCard1 from "../ExampleCard1/ExampleCard1";
+import ExampleCard2 from "../ExampleCard2/ExampleCard2";
 
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
@@ -194,7 +194,7 @@ const Model1Component = ({ onEventHappened }) => {
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       console.log("Transcript:", transcript);
-      if (transcript === "Boy." && UA === 2 && ok === 1) {
+      if (transcript === "Soy." && UA === 2 && ok === 1) {
         console.log("correct broh");
         setIsOpenPopup(true);
 
@@ -517,7 +517,7 @@ const Model1Component = ({ onEventHappened }) => {
               <Webcam ref={webcamRef} />
             </div>
             <div>
-              <ExampleCard1 />
+              <ExampleCard2 />
             </div>
             <div>
               <canvas className="Canvas" ref={canvasRef} />

@@ -31,19 +31,19 @@
   transform: scale(0.95) rotateZ(1.7deg);
 }
 
-.Soyimage{
+.Joyimage{
   position: relative;
   right: 15%;
   
 }
 
-.Soytext{
+.Joytext{
   width: 50%;
   position: relative;
   right: 25%;
   font-size: 34px;
   
 }
-.Soytext .pronunciation {
+.Joytext .pronunciation {
   font-size: 24px; /* Adjust the size as needed */
 }

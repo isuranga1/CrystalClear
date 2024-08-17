@@ -24,9 +24,7 @@ const Learn = () => {
   }, []);
 
   const handleWorkFilter = (item) => {
-    if (item === 'Actions') {
-      navigate('/actions'); // Navigate to the Writing component when "Writing" is clicked
-    } else {
+
       setActiveFilter(item);
       setAnimateCard([{ y: 100, opacity: 0 }]);
 
@@ -39,7 +37,7 @@ const Learn = () => {
           setFilterWork(works.filter((work) => work.tags.includes(item)));
         }
       }, 500);
-    }
+    
   };
 
   const handleWorkClick = (item) => {

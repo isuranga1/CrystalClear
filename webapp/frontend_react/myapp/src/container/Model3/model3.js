@@ -16,8 +16,8 @@ import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3"
 import ParticlesBackground from "../particlesbackground";
 import { Player } from "video-react";
 import "./videoreact.css";
-import Popup from "../Popup/Popup";
-import ExampleCard1 from "../ExampleCard1/ExampleCard1";
+import PopupFinal from "../PopupFinal/Popupfinal";
+import ExampleCard3 from "../ExampleCard3/ExampleCard3";
 
 const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 
@@ -194,7 +194,7 @@ const Model1Component = ({ onEventHappened }) => {
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       console.log("Transcript:", transcript);
-      if (transcript === "Boy." && UA === 2 && ok === 1) {
+      if (transcript === "Joy." && UA === 2 && ok === 1) {
         console.log("correct broh");
         setIsOpenPopup(true);
 
@@ -510,14 +510,16 @@ const Model1Component = ({ onEventHappened }) => {
             <p>{transcript}</p>
           </div>
         )}
-        <div>{isOpenPopup && <Popup setIsOpenPopup={setIsOpenPopup} />}</div>
+        <div>
+          {isOpenPopup && <PopupFinal setIsOpenPopup={setIsOpenPopup} />}
+        </div>
         <div className="webcamvid">
           <div className="wrapperwebcam">
             <div className="Webcam">
               <Webcam ref={webcamRef} />
             </div>
             <div>
-              <ExampleCard1 />
+              <ExampleCard3 />
             </div>
             <div>
               <canvas className="Canvas" ref={canvasRef} />
