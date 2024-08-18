@@ -69,9 +69,7 @@ const PopupFinal = ({ setIsOpenPopup }) => {
               fontSize: "250%",
               color: "#5DFFB3",
             }}
-          >
-            Lets try another one !
-          </p>
+          ></p>
           <audio autoPlay style={{ display: "none" }}>
             <source src={SuccessFinal} type="audio/mpeg" />
             Your browser does not support the audio element.

@@ -1,17 +1,17 @@
 import React from "react";
 import "./ExampleCard2.css"; // Assuming you have a CSS file for styling
-import Soy from "./Soy.png";
+import Toy from "./Toy.png";
 
 const ExampleCard1 = () => {
   return (
     <div className="procard">
       <div className="Soyimage">
         <img
-          src={Soy}
+          src={Toy}
           alt="Description "
           style={{
             marginTop: "15%",
-            marginRight: "50%",
+            marginRight: "60%",
             margin: "0 auto",
             display: "block",
             width: "75%", // Set width to 100% of the container
@@ -21,7 +21,7 @@ const ExampleCard1 = () => {
         />
       </div>
       <div className="Soytext">
-        Soy <br /> <span className="pronunciation">/sɔɪ/</span>
+        Toy <br /> <span className="pronunciation">/tɔɪ/</span>
       </div>
     </div>
   );

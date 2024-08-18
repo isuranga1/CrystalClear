@@ -194,7 +194,7 @@ const Model1Component = ({ onEventHappened }) => {
   useEffect(() => {
     if (browserSupportsSpeechRecognition) {
       console.log("Transcript:", transcript);
-      if (transcript === "Soy." && UA === 2 && ok === 1) {
+      if (transcript === "Toy." && UA === 2 && ok === 1) {
         console.log("correct broh");
         setIsOpenPopup(true);
 
