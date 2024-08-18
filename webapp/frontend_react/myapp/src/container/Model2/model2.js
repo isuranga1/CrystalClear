@@ -6,7 +6,7 @@ import Webcam from "react-webcam";
 import { drawHand } from "../utilities";
 import * as fp from "fingerpose";
 import victory from "./victory.png";
-import BoyDemo from "./BoyDemo.mp4";
+import ToyDemo from "./ToyDemo.mp4";
 import thumbs_up from "./thumbs_up.png";
 import YouTube from "react-youtube";
 import SpeechRecognition, {
@@ -525,7 +525,7 @@ const Model1Component = ({ onEventHappened }) => {
           </div>
           <div className="video-container">
             <Player>
-              <source src={BoyDemo} />
+              <source src={ToyDemo} />
             </Player>
           </div>
         </div>
