@@ -372,9 +372,9 @@ body.video-react-full-window .video-react-fullscreen {
   height: 1.5em;
   width: 3em;
   display: block;
-  position: absolute;
+  position: relative;
   top: 150px;
-  left: 280px;
+  right: 90%;
   padding: 0;
   cursor: pointer;
   opacity: 1;
